@@ -11,8 +11,10 @@ import {
   Mail,
   MapPin,
   Menu,
+  Moon,
   Phone,
   Quote,
+  Sun,
   ShieldCheck,
   Sparkles,
   Users,
@@ -91,6 +93,15 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeSection, setActiveSection] = useState("home");
 
+  const [theme, setTheme] = useState("dark");
+
+  const mutedText = theme === "light" ? "text-slate-700" : "text-slate-400";
+  const softText = theme === "light" ? "text-slate-600" : "text-slate-400";
+  const cardClass =
+      theme === "light"
+         ? "border-slate-200 bg-white text-slate-900 shadow-lg"
+         : "border-white/10 bg-white/5 text-white";
+
   const changeSection = (section: string) => {
     setActiveSection(section);
     setMenuOpen(false);
@@ -110,14 +121,27 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#050816] text-white">
+      <main
+          className={`min-h-screen overflow-hidden transition ${
+            theme === "light"
+             ? "bg-gradient-to-br from-slate-50 to-cyan-50 text-slate-900"
+             : "bg-[#050816] text-white"
+         }`}
+      >  
+      
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-[-10%] top-[-10%] h-96 w-96 rounded-full bg-cyan-500/20 blur-[130px]" />
         <div className="absolute right-[-10%] top-[15%] h-96 w-96 rounded-full bg-violet-500/20 blur-[130px]" />
         <div className="absolute bottom-[-10%] left-[30%] h-96 w-96 rounded-full bg-blue-500/20 blur-[130px]" />
       </div>
 
-      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#050816]/75 backdrop-blur-xl">
+      <nav
+        className={`fixed top-0 z-50 w-full border-b backdrop-blur-xl transition ${
+        theme === "light"
+          ? "border-slate-200 bg-white/90 shadow-sm"
+          : "border-white/10 bg-[#050816]/75"
+        }`}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <button onClick={() => changeSection("home")} className="flex items-center gap-3">
             <Image
@@ -130,7 +154,11 @@ export default function Home() {
             />
           </button>
 
-          <div className="hidden items-center gap-5 text-sm font-medium text-slate-300 md:flex">
+          <div
+            className={`hidden items-center gap-5 text-sm font-medium md:flex ${
+              theme === "light" ? "text-slate-700" : "text-slate-300"
+            }`}
+          >
              {navItems.map((item) => (
                 <button
                    key={item.id}
@@ -142,6 +170,13 @@ export default function Home() {
                  {item.label}
                </button>
            ))}
+           
+           <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15"
+          >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
 
            <button
                 onClick={() => changeSection("donate")}
@@ -160,6 +195,17 @@ export default function Home() {
              </button>
 
              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${
+                   theme === "light"
+                       ? "border-slate-300 bg-slate-100 text-slate-800"
+                       : "border-white/15 bg-white/10 text-white"
+               }`}
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
+             <button
                  onClick={() => setMenuOpen(!menuOpen)}
                  className="rounded-full border border-white/15 p-2"
              >
@@ -169,8 +215,14 @@ export default function Home() {
         </div>
 
         {menuOpen && (
-          <div className="border-t border-white/10 bg-[#050816] px-6 py-5 md:hidden">
-            <div className="flex flex-col gap-4 text-sm text-slate-300">
+          <div
+           className={`border-t px-6 py-5 md:hidden ${
+            theme === "light"
+              ? "border-slate-200 bg-white text-slate-700"
+              : "border-white/10 bg-[#050816] text-slate-300"
+           }`}
+        >
+            <div className="flex flex-col gap-4 text-sm">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -220,6 +272,7 @@ export default function Home() {
                         Admin
                       </button>
                   </Link>
+
                   <button
                     onClick={() => changeSection("work")}
                     className="rounded-full border border-white/15 bg-white/10 px-7 py-3 font-bold backdrop-blur transition hover:bg-white/15"
@@ -229,11 +282,31 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }}>
-                <div className="relative rounded-[2rem] border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-xl">
-                  <div className="rounded-[1.5rem] border border-white/10 bg-[#0B1120]/95 p-6">
+              <motion.div
+                 initial={{ opacity: 0, scale: 0.92 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 className={`relative rounded-[3rem] border p-6 shadow-2xl transition ${
+                    theme === "light"
+                       ? "border-slate-200 bg-white text-slate-900"
+                       : "border-white/10 bg-white/5 text-white"
+                }`}
+             >
+                <div
+                  className={`rounded-[1.5rem] border p-6 ${
+                    theme === "light"
+                     ? "border-slate-200 bg-white text-slate-900"
+                     : "border-white/10 bg-white/5 text-white"
+                 }`}
+               >
+                  <div
+                     className={`rounded-[1.5rem] border p-6 ${
+                         theme === "light"
+                           ? "border-slate-200 bg-slate-100 text-slate-900"
+                           : "border-white/10 bg-[#0B1120]/95 text-white"
+                    }`}
+                  >
                     <Image
-                      src="/hero.png"
+                      src="/hero.png"                      
                       alt="NayePankh Foundation work"
                       width={700}
                       height={420}
@@ -546,37 +619,37 @@ export default function Home() {
             <div className="mb-12 text-center">
               <Globe2 className="mx-auto mb-6 text-cyan-300" size={42} />
               <h2 className="text-4xl font-black md:text-5xl">Be a Changemaker</h2>
-              <p className="mx-auto mt-5 max-w-2xl text-slate-300">
+              <p className={`mx-auto mt-5 max-w-2xl ${mutedText}`}>
                 Join hands with NayePankh Foundation and contribute your time,
                 ideas and skills to create positive change.
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div className={`rounded-3xl border p-6 ${cardClass}`}>
                 <Mail className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Email</h3>
                 <p className="mt-2 text-slate-400">contact@nayepankh.org</p>
               </div>
 
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div className={`rounded-3xl border p-6 ${cardClass}`}>
                 <Phone className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Phone</h3>
-                <p className="mt-2 text-slate-400">+91 XXXXX XXXXX</p>
+                <p className={`mt-2 ${softText}`}>+91 XXXXX XXXXX</p>
               </div>
 
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div className={`rounded-3xl border p-6 ${cardClass}`}>
                 <MapPin className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Location</h3>
-                <p className="mt-2 text-slate-400">India</p>
+                <p className={`mt-2 ${softText}`}>India</p>
               </div>
             </div>
 
             <div className="mt-16 grid gap-8 md:grid-cols-3">
               {testimonials.map((item) => (
-                <div key={item.name} className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
+                <div key={item.name} className={`rounded-[1.5rem] border p-6 ${cardClass}`}>
                   <Quote className="mb-4 text-cyan-300" />
-                  <p className="leading-7 text-slate-200">{item.text}</p>
+                  <p className={`leading-7 ${mutedText}`}>{item.text}</p>
                   <h4 className="mt-5 font-bold">{item.name}</h4>
                 </div>
               ))}
@@ -585,7 +658,13 @@ export default function Home() {
         )}
       </div>
 
-      <footer className="relative z-10 border-t border-white/10 bg-[#030712] px-6 py-14">
+      <footer
+         className={`relative z-10 border-t px-6 py-14 transition ${
+            theme === "light"
+               ? "border-slate-200 bg-slate-100 text-slate-800"
+               : "border-white/10 bg-[#030712] text-white"
+        }`}
+      >
         <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-3">
@@ -598,7 +677,9 @@ export default function Home() {
               />
             </div>
 
-            <p className="leading-7 text-slate-400">
+            <p className={`leading-7 ${
+                 theme === "light" ? "text-slate-700" : "text-slate-400"
+              }`}>
               Empowering communities through education, volunteering and social impact initiatives.
             </p>
           </div>
@@ -606,7 +687,9 @@ export default function Home() {
           <div>
             <h3 className="mb-4 text-lg font-bold text-cyan-300">Quick Links</h3>
 
-            <div className="flex flex-col items-start gap-3 text-slate-400">
+            <div className={`flex flex-col items-start gap-3 ${
+                   theme === "light" ? "text-slate-700" : "text-slate-400"
+                 }`}>
               <button onClick={() => changeSection("home")}>Home</button>
               <button onClick={() => changeSection("about")}>About</button>
               <button onClick={() => changeSection("work")}>Work</button>
@@ -617,7 +700,9 @@ export default function Home() {
           <div>
             <h3 className="mb-4 text-lg font-bold text-cyan-300">Contact Info</h3>
 
-            <div className="space-y-3 text-slate-400">
+            <div className={`space-y-3 ${
+                   theme === "light" ? "text-slate-700" : "text-slate-400"
+                 }`}>
               <p>📧 contact@nayepankh.org</p>
               <p>📍 India</p>
               <p>📞 +91 XXXXX XXXXX</p>
@@ -625,7 +710,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-slate-500">
+        <div className={`mt-10 border-t pt-6 text-center text-sm ${
+               theme === "light"
+                  ? "border-slate-200 text-slate-600"
+                  : "border-white/10 text-slate-500"
+              }`}>
           © 2026 NayePankh Foundation | Designed by Shruti
         </div>
       </footer>
