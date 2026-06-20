@@ -11,10 +11,8 @@ import {
   Mail,
   MapPin,
   Menu,
-  Moon,
   Phone,
   Quote,
-  Sun,
   ShieldCheck,
   Sparkles,
   Users,
@@ -93,15 +91,6 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeSection, setActiveSection] = useState("home");
 
-  const [theme, setTheme] = useState("dark");
-
-  const mutedText = theme === "light" ? "text-slate-700" : "text-slate-400";
-  const softText = theme === "light" ? "text-slate-600" : "text-slate-400";
-  const cardClass =
-      theme === "light"
-         ? "border-slate-200 bg-white text-slate-900 shadow-lg"
-         : "border-white/10 bg-white/5 text-white";
-
   const changeSection = (section: string) => {
     setActiveSection(section);
     setMenuOpen(false);
@@ -121,27 +110,16 @@ export default function Home() {
   ];
 
   return (
-      <main
-          className={`min-h-screen overflow-hidden transition ${
-            theme === "light"
-             ? "bg-gradient-to-br from-slate-50 to-cyan-50 text-slate-900"
-             : "bg-[#050816] text-white"
-         }`}
-      >  
-      
+    <main className="min-h-screen overflow-hidden bg-[#050816] text-white">
+      {/* Background blurs */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-[-10%] top-[-10%] h-96 w-96 rounded-full bg-cyan-500/20 blur-[130px]" />
         <div className="absolute right-[-10%] top-[15%] h-96 w-96 rounded-full bg-violet-500/20 blur-[130px]" />
         <div className="absolute bottom-[-10%] left-[30%] h-96 w-96 rounded-full bg-blue-500/20 blur-[130px]" />
       </div>
 
-      <nav
-        className={`fixed top-0 z-50 w-full border-b backdrop-blur-xl transition ${
-        theme === "light"
-          ? "border-slate-200 bg-white/90 shadow-sm"
-          : "border-white/10 bg-[#050816]/75"
-        }`}
-      >
+      {/* Navigation */}
+      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#050816]/75 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <button onClick={() => changeSection("home")} className="flex items-center gap-3">
             <Image
@@ -154,74 +132,46 @@ export default function Home() {
             />
           </button>
 
-          <div
-            className={`hidden items-center gap-5 text-sm font-medium md:flex ${
-              theme === "light" ? "text-slate-700" : "text-slate-300"
-            }`}
-          >
-             {navItems.map((item) => (
-                <button
-                   key={item.id}
-                   onClick={() => changeSection(item.id)}
-                   className={`hover:text-cyan-300 ${
-                      activeSection === item.id ? "text-cyan-300" : ""
-                 }`}
-          >
-                 {item.label}
-               </button>
-           ))}
-           
-           <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15"
-          >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+          <div className="hidden items-center gap-5 text-sm font-medium text-slate-300 md:flex">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => changeSection(item.id)}
+                className={`hover:text-cyan-300 ${
+                  activeSection === item.id ? "text-cyan-300" : ""
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
 
-           <button
-                onClick={() => changeSection("donate")}
-                className="rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-white shadow-lg transition hover:scale-105"
-           >
-            Donate
-           </button>
-         </div>
+            <button
+              onClick={() => changeSection("donate")}
+              className="rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-white shadow-lg transition hover:scale-105"
+            >
+              Donate
+            </button>
+          </div>
 
           <div className="flex items-center gap-3 md:hidden">
-             <button
-                onClick={() => changeSection("donate")}
-                className="rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:scale-105"
-             >
-                Donate
-             </button>
+            <button
+              onClick={() => changeSection("donate")}
+              className="rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:scale-105"
+            >
+              Donate
+            </button>
 
-             <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${
-                   theme === "light"
-                       ? "border-slate-300 bg-slate-100 text-slate-800"
-                       : "border-white/15 bg-white/10 text-white"
-               }`}
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
-             <button
-                 onClick={() => setMenuOpen(!menuOpen)}
-                 className="rounded-full border border-white/15 p-2"
-             >
-                 {menuOpen ? <X size={20} /> : <Menu size={20} />}
-             </button>
-            </div>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="rounded-full border border-white/15 p-2"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
-          <div
-           className={`border-t px-6 py-5 md:hidden ${
-            theme === "light"
-              ? "border-slate-200 bg-white text-slate-700"
-              : "border-white/10 bg-[#050816] text-slate-300"
-           }`}
-        >
+          <div className="border-t border-white/10 bg-[#050816] px-6 py-5 text-slate-300 md:hidden">
             <div className="flex flex-col gap-4 text-sm">
               {navItems.map((item) => (
                 <button
@@ -237,17 +187,13 @@ export default function Home() {
         )}
       </nav>
 
+      {/* Main Content */}
       <div className="relative z-10 min-h-screen px-6 pb-20 pt-32 md:pt-40">
         {activeSection === "home" && (
           <section>
             <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
               <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}>
-              <div className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition ${
-                 theme === "light"
-                   ? "border-cyan-500/30 bg-cyan-100 text-cyan-800"
-                   : "border-cyan-400/30 bg-cyan-400/10 text-cyan-300"
-                 }`}
-                 >
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300">
                   <Sparkles size={16} />
                   Small Hands, Big Change
                 </div>
@@ -266,16 +212,15 @@ export default function Home() {
 
                 <div className="mt-8 flex flex-wrap gap-4">
                   <Link href="/register">
-                     <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-7 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105">
-                          Become a Volunteer <ArrowRight size={18} />
-                     </button>
+                    <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-7 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105">
+                      Become a Volunteer <ArrowRight size={18} />
+                    </button>
                   </Link>
-                  
-                   
+
                   <Link href="/login">
-                      <button className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-7 py-3 font-bold text-white shadow-lg shadow-violet-500/25 transition hover:scale-105">
-                        Admin
-                      </button>
+                    <button className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-7 py-3 font-bold text-white shadow-lg shadow-violet-500/25 transition hover:scale-105">
+                      Admin
+                    </button>
                   </Link>
 
                   <button
@@ -288,53 +233,35 @@ export default function Home() {
               </motion.div>
 
               <motion.div
-                 initial={{ opacity: 0, scale: 0.92 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 className={`relative rounded-[3rem] border p-6 shadow-2xl transition ${
-                    theme === "light"
-                       ? "border-slate-200 bg-white text-slate-900"
-                       : "border-white/10 bg-white/5 text-white"
-                }`}
-             >
-                <div
-                  className={`rounded-[1.5rem] border p-6 ${
-                    theme === "light"
-                     ? "border-slate-200 bg-white text-slate-900"
-                     : "border-white/10 bg-white/5 text-white"
-                 }`}
-               >
-                  <div
-                     className={`rounded-[1.5rem] border p-6 ${
-                         theme === "light"
-                           ? "border-slate-200 bg-slate-100 text-slate-900"
-                           : "border-white/10 bg-[#0B1120]/95 text-white"
-                    }`}
-                  >
-                    <Image
-                      src="/hero.png"                      
-                      alt="NayePankh Foundation work"
-                      width={700}
-                      height={420}
-                      priority
-                      className="mb-6 h-64 w-full rounded-[1.5rem] object-cover"
-                    />
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative rounded-[3rem] border border-white/10 bg-white/5 p-6 shadow-2xl"
+              >
+                <div className="rounded-[1.5rem] border border-white/10 bg-[#0B1120]/95 p-6">
+                  <Image
+                    src="/hero.png"
+                    alt="NayePankh Foundation work"
+                    width={700}
+                    height={420}
+                    priority
+                    className="mb-6 h-64 w-full rounded-[1.5rem] object-cover"
+                  />
 
-                    <div className="mb-6 flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-slate-400">Live Impact</p>
-                        <h3 className="text-2xl font-bold">Community Dashboard</h3>
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-slate-400">Live Impact</p>
+                      <h3 className="text-2xl font-bold">Community Dashboard</h3>
+                    </div>
+                    <ShieldCheck className="text-cyan-300" />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    {stats.map((stat) => (
+                      <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                        <h4 className="text-3xl font-black text-cyan-300">{stat.number}</h4>
+                        <p className="mt-1 text-sm text-slate-400">{stat.label}</p>
                       </div>
-                      <ShieldCheck className="text-cyan-300" />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      {stats.map((stat) => (
-                        <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                          <h4 className="text-3xl font-black text-cyan-300">{stat.number}</h4>
-                          <p className="mt-1 text-sm text-slate-400">{stat.label}</p>
-                        </div>
-                      ))}
-                    </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -550,111 +477,111 @@ export default function Home() {
         {activeSection === "donate" && (
           <section className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
-               <h2 className="text-4xl font-black md:text-5xl">
-                  Support a Better Tomorrow
-               </h2>
+              <h2 className="text-4xl font-black md:text-5xl">
+                Support a Better Tomorrow
+              </h2>
 
-               <p className="mx-auto mt-4 max-w-2xl text-slate-400">
-                  Your contribution helps education, food distribution,
-                  healthcare awareness and youth empowerment programs.
-               </p>
-             </div>
- 
-             <div className="grid gap-8 lg:grid-cols-2">
-                <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur">
-                  <h3 className="mb-6 text-2xl font-bold text-cyan-300">
-                     Donation Impact
-                  </h3>
+              <p className="mx-auto mt-4 max-w-2xl text-slate-400">
+                Your contribution helps education, food distribution,
+                healthcare awareness and youth empowerment programs.
+              </p>
+            </div>
 
-                  <div className="space-y-4">
-                    <div className="rounded-2xl bg-white/5 p-5">
-                      <h4 className="font-bold text-xl">₹500</h4>
-                      <p className="text-slate-400">
-                        Supports educational materials for children.
-                      </p>
-                    </div>
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur">
+                <h3 className="mb-6 text-2xl font-bold text-cyan-300">
+                  Donation Impact
+                </h3>
 
-                    <div className="rounded-2xl bg-white/5 p-5">
-                      <h4 className="font-bold text-xl">₹1000</h4>
-                      <p className="text-slate-400">
-                        Helps provide food and essential supplies.
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl bg-white/5 p-5">
-                      <h4 className="font-bold text-xl">₹2500+</h4>
-                      <p className="text-slate-400">
-                         Supports community development programs.
-                      </p>
-                    </div>
-                   </div>
+                <div className="space-y-4">
+                  <div className="rounded-2xl bg-white/5 p-5">
+                    <h4 className="text-xl font-bold">₹500</h4>
+                    <p className="text-slate-400">
+                      Supports educational materials for children.
+                    </p>
                   </div>
 
-                  <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur">
-                    <h3 className="mb-6 text-2xl font-bold text-cyan-300">
-                       Donate Now
-                    </h3>
-
-                  <div className="rounded-2xl bg-white p-5 text-center text-black">
-                    <p className="font-semibold">
-                       Add NGO UPI QR Image Here
+                  <div className="rounded-2xl bg-white/5 p-5">
+                    <h4 className="text-xl font-bold">₹1000</h4>
+                    <p className="text-slate-400">
+                      Helps provide food and essential supplies.
                     </p>
-
-                    <div className="mt-4 flex h-56 items-center justify-center rounded-xl border-2 border-dashed border-slate-300">
-                       QR CODE
-                    </div>
                   </div>
 
-                  <div className="mt-6 rounded-2xl bg-white/5 p-5">
-                    <p className="text-slate-300">
-                       UPI ID: <span className="font-bold text-cyan-300">nayepankh@upi</span>
-                    </p>
-
-                    <p className="mt-2 text-slate-400">
-                       Every contribution makes a meaningful difference ❤️
+                  <div className="rounded-2xl bg-white/5 p-5">
+                    <h4 className="text-xl font-bold">₹2500+</h4>
+                    <p className="text-slate-400">
+                      Supports community development programs.
                     </p>
                   </div>
                 </div>
-               </div>
-             </section>
-            )}
+              </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur">
+                <h3 className="mb-6 text-2xl font-bold text-cyan-300">
+                  Donate Now
+                </h3>
+
+                <div className="rounded-2xl bg-white p-5 text-center text-black">
+                  <p className="font-semibold">
+                    Add NGO UPI QR Image Here
+                  </p>
+
+                  <div className="mt-4 flex h-56 items-center justify-center rounded-xl border-2 border-dashed border-slate-300">
+                    QR CODE
+                  </div>
+                </div>
+
+                <div className="mt-6 rounded-2xl bg-white/5 p-5">
+                  <p className="text-slate-300">
+                    UPI ID: <span className="font-bold text-cyan-300">nayepankh@upi</span>
+                  </p>
+
+                  <p className="mt-2 text-slate-400">
+                    Every contribution makes a meaningful difference ❤️
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {activeSection === "contact" && (
           <section className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
               <Globe2 className="mx-auto mb-6 text-cyan-300" size={42} />
               <h2 className="text-4xl font-black md:text-5xl">Be a Changemaker</h2>
-              <p className={`mx-auto mt-5 max-w-2xl ${mutedText}`}>
+              <p className="mx-auto mt-5 max-w-2xl text-slate-400">
                 Join hands with NayePankh Foundation and contribute your time,
                 ideas and skills to create positive change.
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
-              <div className={`rounded-3xl border p-6 ${cardClass}`}>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
                 <Mail className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Email</h3>
                 <p className="mt-2 text-slate-400">contact@nayepankh.org</p>
               </div>
 
-              <div className={`rounded-3xl border p-6 ${cardClass}`}>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
                 <Phone className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Phone</h3>
-                <p className={`mt-2 ${softText}`}>+91 XXXXX XXXXX</p>
+                <p className="mt-2 text-slate-400">+91 XXXXX XXXXX</p>
               </div>
 
-              <div className={`rounded-3xl border p-6 ${cardClass}`}>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
                 <MapPin className="mb-4 text-cyan-300" />
                 <h3 className="font-bold">Location</h3>
-                <p className={`mt-2 ${softText}`}>India</p>
+                <p className="mt-2 text-slate-400">India</p>
               </div>
             </div>
 
             <div className="mt-16 grid gap-8 md:grid-cols-3">
               {testimonials.map((item) => (
-                <div key={item.name} className={`rounded-[1.5rem] border p-6 ${cardClass}`}>
+                <div key={item.name} className="rounded-[1.5rem] border border-white/10 bg-white/5 p-6">
                   <Quote className="mb-4 text-cyan-300" />
-                  <p className={`leading-7 ${mutedText}`}>{item.text}</p>
+                  <p className="leading-7 text-slate-400">{item.text}</p>
                   <h4 className="mt-5 font-bold">{item.name}</h4>
                 </div>
               ))}
@@ -663,13 +590,8 @@ export default function Home() {
         )}
       </div>
 
-      <footer
-         className={`relative z-10 border-t px-6 py-14 transition ${
-            theme === "light"
-               ? "border-slate-200 bg-slate-100 text-slate-800"
-               : "border-white/10 bg-[#030712] text-white"
-        }`}
-      >
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/10 bg-[#030712] px-6 py-14">
         <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-3">
@@ -682,9 +604,7 @@ export default function Home() {
               />
             </div>
 
-            <p className={`leading-7 ${
-                 theme === "light" ? "text-slate-700" : "text-slate-400"
-              }`}>
+            <p className="leading-7 text-slate-400">
               Empowering communities through education, volunteering and social impact initiatives.
             </p>
           </div>
@@ -692,9 +612,7 @@ export default function Home() {
           <div>
             <h3 className="mb-4 text-lg font-bold text-cyan-300">Quick Links</h3>
 
-            <div className={`flex flex-col items-start gap-3 ${
-                   theme === "light" ? "text-slate-700" : "text-slate-400"
-                 }`}>
+            <div className="flex flex-col items-start gap-3 text-slate-400">
               <button onClick={() => changeSection("home")}>Home</button>
               <button onClick={() => changeSection("about")}>About</button>
               <button onClick={() => changeSection("work")}>Work</button>
@@ -705,22 +623,52 @@ export default function Home() {
           <div>
             <h3 className="mb-4 text-lg font-bold text-cyan-300">Contact Info</h3>
 
-            <div className={`space-y-3 ${
-                   theme === "light" ? "text-slate-700" : "text-slate-400"
-                 }`}>
-              <p>📧 contact@nayepankh.org</p>
-              <p>📍 India</p>
-              <p>📞 +91 XXXXX XXXXX</p>
-            </div>
+            <div className="space-y-3 text-slate-400">
+              <a
+                href="https://www.youtube.com/@nayepankhfoundation"
+                className="block transition hover:text-cyan-300"
+              >
+                  Youtube
+              </a>
+              <a
+                 href="https://www.instagram.com/nayepankhfoundation"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="block transition hover:text-cyan-300"
+              >
+                Instagram
+              </a>
+              
+              <a
+                  href="https://www.facebook.com/nayepankhfoundation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block transition hover:text-cyan-300"
+              >
+                 Facebook
+              </a>
+              <a
+                  href="https://www.linkedin.com/company/nayepankh/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block transition hover:text-cyan-300"
+              >
+                  LinkedIn
+              </a>
+               <a
+                   href="https://x.com/nayepankh"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="block transition hover:text-cyan-300"
+               >
+                    X (Twitter)
+               </a>
+           </div>
           </div>
         </div>
 
-        <div className={`mt-10 border-t pt-6 text-center text-sm ${
-               theme === "light"
-                  ? "border-slate-200 text-slate-600"
-                  : "border-white/10 text-slate-500"
-              }`}>
-          © 2026 NayePankh Foundation | Designed by Shruti
+        <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-slate-500">
+          © 2026 NayePankh Foundation | All right resserved.
         </div>
       </footer>
     </main>
